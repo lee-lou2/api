@@ -33,15 +33,15 @@ func main() {
 	// Fiber 신규 생성
 	app := fiber.New(config)
 
-	// Middlewares.
+	// 미들웨어
 	middleware.FiberMiddleware(app) // Register Fiber's middleware for app.
 
-	// Routes.
+	// 라우트
 	restapi.SwaggerRoute(app)  // Register a route for API Docs (Swagger).
 	restapi.MainRoutes(app)    // Register a public routes for app.
 	restapi.NotFoundRoute(app) // Register route for 404 Error.
 
-	// Start server (with or without graceful shutdown).
+	// 서버 실행
 	if os.Getenv("STAGE_STATUS") == "dev" {
 		core.StartServer(app)
 	} else {
