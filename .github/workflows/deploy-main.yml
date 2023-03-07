@@ -1,0 +1,49 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: lee-lou2/api
+          stage: main
+          yaml: |
+            name: api
+            app: golang
+            options:
+              env:
+                - name: STAGE_STATUS
+                  value: dev
+                - name: SERVER_HOST
+                  value: 0.0.0.0
+                - name: SERVER_PORT
+                  value: "5000"
+                - name: SERVER_READ_TIMEOUT
+                  value: "60"
+                - name: JWT_SECRET_KEY
+                  value: secret
+                - name: JWT_SECRET_KEY_EXPIRE_MINUTES_COUNT
+                  value: "15"
+                - name: JWT_REFRESH_KEY
+                  value: refresh
+                - name: JWT_REFRESH_KEY_EXPIRE_HOURS_COUNT
+                  value: "720"
+              ports: "5000"
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: fiber
