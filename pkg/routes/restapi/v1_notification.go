@@ -1,4 +1,4 @@
-package routes
+package restapi
 
 import (
 	"github.com/gofiber/fiber/v2"
@@ -6,21 +6,21 @@ import (
 	"github.com/lee-lou2/hub/app/notification/models"
 )
 
-// PrivateRoutes func for describe group of private routes.
-func PrivateRoutes(a *fiber.App) {
-	route := a.Group("/api/v1")
-
-	notify := route.Group("/notify")
+// NotificationRoutes func for describe group of private routes.
+func NotificationRoutes(v1 fiber.Router) {
+	notify := v1.Group("/notify")
 	{
-		notify.Post("/send", func(c *fiber.Ctx) error {
+		notify.Post("/send/:app", func(c *fiber.Ctx) error {
 			var payload models.Message
 			if err := c.BodyParser(&payload); err != nil {
 				return err
 			}
-			switch payload.MessageType {
-			case 0:
+
+			// 라우팅
+			switch c.Params("app") {
+			case "email":
 				controllers.SendEmail(payload)
-			case 1:
+			case "sms":
 				controllers.SenSMS(payload)
 			default:
 				panic("Not Found Message Type")

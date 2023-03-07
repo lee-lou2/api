@@ -1,14 +1,13 @@
 package main
 
 import (
+	"github.com/lee-lou2/hub/pkg/core"
+	"github.com/lee-lou2/hub/pkg/routes/restapi"
 	"os"
 
+	"github.com/gofiber/fiber/v2"
 	"github.com/lee-lou2/hub/pkg/configs"
 	"github.com/lee-lou2/hub/pkg/middleware"
-	"github.com/lee-lou2/hub/pkg/routes"
-	"github.com/lee-lou2/hub/pkg/utils"
-
-	"github.com/gofiber/fiber/v2"
 
 	_ "github.com/joho/godotenv/autoload" // load .env file automatically
 )
@@ -38,15 +37,14 @@ func main() {
 	middleware.FiberMiddleware(app) // Register Fiber's middleware for app.
 
 	// Routes.
-	routes.SwaggerRoute(app)  // Register a route for API Docs (Swagger).
-	routes.PublicRoutes(app)  // Register a public routes for app.
-	routes.PrivateRoutes(app) // Register a private routes for app.
-	routes.NotFoundRoute(app) // Register route for 404 Error.
+	restapi.SwaggerRoute(app)  // Register a route for API Docs (Swagger).
+	restapi.MainRoutes(app)    // Register a public routes for app.
+	restapi.NotFoundRoute(app) // Register route for 404 Error.
 
 	// Start server (with or without graceful shutdown).
 	if os.Getenv("STAGE_STATUS") == "dev" {
-		utils.StartServer(app)
+		core.StartServer(app)
 	} else {
-		utils.StartServerWithGracefulShutdown(app)
+		core.StartServerWithGracefulShutdown(app)
 	}
 }

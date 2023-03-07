@@ -27,7 +27,7 @@ func SendEmail(message models.Message) {
 			emailHost,
 			target,
 			message.Subject,
-			message.Body,
+			message.Message,
 			emailPort,
 		)
 	}

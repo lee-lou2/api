@@ -22,7 +22,7 @@ func SenSMS(message models.Message) {
 			token,
 			fromNumber,
 			target,
-			message.Body,
+			message.Message,
 		)
 	}
 }
