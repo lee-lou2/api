@@ -34,6 +34,9 @@ func SendKaKaOToMe(message models.Message) {
 // SendKaKaOToFriend 친구들에게 카카오톡 보내기
 func SendKaKaOToFriend(message models.Message) {
 	// 메시지 전송
+	if len(message.Targets) == 0 {
+		go sendKaKaOToFriend(message.Message, "")
+	}
 	for _, target := range message.Targets {
 		friendUUID := target
 		if friendUUID == "" {
@@ -54,7 +57,6 @@ func sendKaKaOToMe(message string) {
 
 	redis := cache.RedisClient()
 	accessToken, err := redis.GetValue("kakao_access_token")
-	fmt.Println(accessToken)
 	if err != nil {
 		log.Println(err)
 		return
@@ -78,7 +80,7 @@ func sendKaKaOToMe(message string) {
 // sendKaKaOToFriend 친구에게 카카오톡 보내기
 func sendKaKaOToFriend(message, friendUuid string) {
 	if friendUuid == "" {
-		_friendUuid := os.Getenv("EXTERNAL_API_KAKAO_DEFAULT_FRIEND_UUID")
+		_friendUuid := os.Getenv("KAKAO_API_DEFAULT_FRIEND_UUID")
 		friendUuid = _friendUuid
 	}
 	templateObject := SimpleMessageTemplate(message)
