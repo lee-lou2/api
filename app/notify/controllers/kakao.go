@@ -35,16 +35,12 @@ func SendKaKaOToMe(message models.Message) {
 func SendKaKaOToFriend(message models.Message) {
 	// 메시지 전송
 	if len(message.Targets) == 0 {
-		go sendKaKaOToFriend(message.Message, "")
+		message.Targets = append(message.Targets, os.Getenv("KAKAO_API_DEFAULT_FRIEND_UUID"))
 	}
 	for _, target := range message.Targets {
-		friendUUID := target
-		if friendUUID == "" {
-			friendUUID = os.Getenv("KAKAO_API_DEFAULT_FRIEND_UUID")
-		}
 		go sendKaKaOToFriend(
 			message.Message,
-			friendUUID,
+			target,
 		)
 	}
 }
@@ -79,10 +75,6 @@ func sendKaKaOToMe(message string) {
 
 // sendKaKaOToFriend 친구에게 카카오톡 보내기
 func sendKaKaOToFriend(message, friendUuid string) {
-	if friendUuid == "" {
-		_friendUuid := os.Getenv("KAKAO_API_DEFAULT_FRIEND_UUID")
-		friendUuid = _friendUuid
-	}
 	templateObject := SimpleMessageTemplate(message)
 
 	url := "https://kapi.kakao.com/v1/api/talk/friends/message/default/send"

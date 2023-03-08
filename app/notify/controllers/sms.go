@@ -4,6 +4,7 @@ import (
 	"fmt"
 	twilio "github.com/kevinburke/twilio-go"
 	"github.com/lee-lou2/api/app/notify/models"
+	"github.com/lee-lou2/api/internal/validations"
 	"log"
 	"os"
 )
@@ -17,11 +18,16 @@ func SenSMS(message models.Message) {
 
 	// 메시지 전송
 	for _, target := range message.Targets {
+		phone, err := validations.NormalizePhoneNumber(target)
+		if err != nil {
+			log.Println(err)
+			continue
+		}
 		go sendSMSTwilio(
 			sid,
 			token,
 			fromNumber,
-			target,
+			phone,
 			message.Message,
 		)
 	}

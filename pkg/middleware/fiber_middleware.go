@@ -16,7 +16,6 @@ import (
 // FiberMiddleware provide Fiber's built-in middlewares.
 // See: https://docs.gofiber.io/api/middleware
 func FiberMiddleware(a *fiber.App) {
-	// cors, logger
 	a.Use(
 		cors.New(),
 		logger.New(),

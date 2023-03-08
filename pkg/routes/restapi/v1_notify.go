@@ -4,6 +4,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/lee-lou2/api/app/notify/controllers"
 	"github.com/lee-lou2/api/app/notify/models"
+	"log"
 )
 
 // NotifyRoutes func for describe group of private routes.
@@ -15,6 +16,7 @@ func NotifyRoutes(v1 fiber.Router) {
 			if err := c.BodyParser(&payload); err != nil {
 				return err
 			}
+			log.Println("메시지 전송")
 
 			// 라우팅
 			switch c.Params("app") {
@@ -26,7 +28,7 @@ func NotifyRoutes(v1 fiber.Router) {
 				controllers.SendSlack(payload)
 			case "kakao-to-me":
 				controllers.SendKaKaOToMe(payload)
-			case "kakao-to-friend":
+			case "kakao":
 				controllers.SendKaKaOToFriend(payload)
 			default:
 				panic("Not Found Message Type")
