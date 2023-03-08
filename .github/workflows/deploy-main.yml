@@ -33,14 +33,10 @@ jobs:
                   value: "5000"
                 - name: SERVER_READ_TIMEOUT
                   value: "60"
-                - name: JWT_SECRET_KEY
-                  value: secret
-                - name: JWT_SECRET_KEY_EXPIRE_MINUTES_COUNT
-                  value: "15"
-                - name: JWT_REFRESH_KEY
-                  value: refresh
-                - name: JWT_REFRESH_KEY_EXPIRE_HOURS_COUNT
-                  value: "720"
+                - name: AWS_CLIENT_KEY
+                  value: ${{ secrets.AWS_CLIENT_KEY }}
+                - name: AWS_CLIENT_SECRET
+                  value: ${{ secrets.AWS_CLIENT_SECRET }}
               ports: "5000"
             context:
               git:

@@ -1,15 +1,12 @@
 package main
 
 import (
-	"github.com/lee-lou2/hub/pkg/core"
-	"github.com/lee-lou2/hub/pkg/routes/restapi"
-	"os"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/lee-lou2/hub/pkg/configs"
+	"github.com/lee-lou2/hub/pkg/core"
 	"github.com/lee-lou2/hub/pkg/middleware"
-
-	_ "github.com/joho/godotenv/autoload" // load .env file automatically
+	"github.com/lee-lou2/hub/pkg/routes/restapi"
+	"os"
 )
 
 // @title API

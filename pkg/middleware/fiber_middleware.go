@@ -37,9 +37,8 @@ func FiberMiddleware(a *fiber.App) {
 		// 비동기 처리
 		go func(_logEntry map[string]interface{}) {
 			// 로그를 MongoDB에 저장
-			dbName := os.Getenv("ACCESS_LOG_DATABASE")
-			colName := os.Getenv("ACCESS_LOG_DATABASE_COLLECTION")
-			client, collection, _ := database.GetCollection(dbName, colName)
+			dbName := os.Getenv("LOG_GROUP_DATABASE")
+			client, collection, _ := database.GetCollection(dbName, "access")
 			defer client.Disconnect(context.Background())
 			_, err := collection.InsertOneDocument(_logEntry)
 			if err != nil {
