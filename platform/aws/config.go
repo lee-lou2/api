@@ -20,5 +20,6 @@ func awsConfig() (aws.Config, error) {
 				"",
 			),
 		),
+		config.WithRegion("ap-northeast-2"),
 	)
 }

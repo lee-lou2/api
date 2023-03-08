@@ -13,7 +13,11 @@ import (
 func SetEnvironments() {
 	cfg, err := awsConfig()
 	if err != nil {
-		panic(fmt.Sprintf("환경 변수 설정을 위한 AWS 연결이 실패하였습니다. 오류 내용 : %s\n", err.Error()))
+		panic(fmt.Sprintf(
+			"환경 변수 설정을 위한 AWS "+
+				"연결이 실패하였습니다. 오류 내용 : %s\n",
+			err.Error(),
+		))
 	}
 
 	// SSM 서비스 클라이언트 생성
