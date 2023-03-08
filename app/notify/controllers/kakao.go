@@ -54,6 +54,7 @@ func sendKaKaOToMe(message string) {
 
 	redis := cache.RedisClient()
 	accessToken, err := redis.GetValue("kakao_access_token")
+	fmt.Println(accessToken)
 	if err != nil {
 		log.Println(err)
 		return

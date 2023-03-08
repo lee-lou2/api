@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/lee-lou2/api/internal/schedulers"
 	"github.com/lee-lou2/api/pkg/configs"
 	"github.com/lee-lou2/api/pkg/core"
 	"github.com/lee-lou2/api/pkg/middleware"
@@ -24,6 +25,7 @@ import (
 func main() {
 	// 기본 설정
 	configs.SetApplicationConfig()
+	go schedulers.RunSchedulers()
 
 	// Fiber 설정 파일 조회
 	config := configs.FiberConfig()
