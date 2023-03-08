@@ -24,6 +24,10 @@ func NotifyRoutes(v1 fiber.Router) {
 				controllers.SenSMS(payload)
 			case "slack":
 				controllers.SendSlack(payload)
+			case "kakao-to-me":
+				controllers.SendKaKaOToMe(payload)
+			case "kakao-to-friend":
+				controllers.SendKaKaOToFriend(payload)
 			default:
 				panic("Not Found Message Type")
 			}

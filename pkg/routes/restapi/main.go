@@ -17,7 +17,10 @@ func MainRoutes(a *fiber.App) {
 	// Create v1 routes group.
 	v1 := a.Group("/v1")
 	{
+		// 메시지
 		NotifyRoutes(v1)
+		// 카카오
+		KaKaORoutes(v1)
 	}
 }
 

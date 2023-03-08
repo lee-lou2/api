@@ -49,8 +49,6 @@ func SendKaKaOToFriend(message models.Message) {
 // sendKaKaOToMe 나에게 카카오톡 보내기
 func sendKaKaOToMe(message string) {
 	templateObject := SimpleMessageTemplate(message)
-	templateObjectBytes, _ := json.Marshal(templateObject)
-	templateObjectString := string(templateObjectBytes)
 
 	url := "https://kapi.kakao.com/v2/api/talk/memo/default/send"
 
@@ -62,9 +60,9 @@ func sendKaKaOToMe(message string) {
 	}
 
 	params := netUrl.Values{}
-	params.Add("template_object", templateObjectString)
+	params.Add("template_object", templateObject)
 
-	resp, err := http.Request(
+	_, err = http.Request(
 		"POST",
 		url,
 		bytes.NewBufferString(params.Encode()),
@@ -73,8 +71,6 @@ func sendKaKaOToMe(message string) {
 	)
 	if err != nil {
 		log.Println(err)
-	} else {
-		log.Println(resp.Body)
 	}
 }
 
@@ -85,8 +81,6 @@ func sendKaKaOToFriend(message, friendUuid string) {
 		friendUuid = _friendUuid
 	}
 	templateObject := SimpleMessageTemplate(message)
-	templateObjectBytes, _ := json.Marshal(templateObject)
-	templateObjectString := string(templateObjectBytes)
 
 	url := "https://kapi.kakao.com/v1/api/talk/friends/message/default/send"
 
@@ -99,9 +93,9 @@ func sendKaKaOToFriend(message, friendUuid string) {
 
 	params := netUrl.Values{}
 	params.Add("receiver_uuids", fmt.Sprintf(`["%s"]`, friendUuid))
-	params.Add("template_object", templateObjectString)
+	params.Add("template_object", templateObject)
 
-	resp, err := http.Request(
+	_, err = http.Request(
 		"POST",
 		url,
 		bytes.NewBufferString(params.Encode()),
@@ -110,7 +104,5 @@ func sendKaKaOToFriend(message, friendUuid string) {
 	)
 	if err != nil {
 		log.Println(err)
-	} else {
-		log.Println(resp.Body)
 	}
 }

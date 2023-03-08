@@ -6,7 +6,6 @@ import (
 	"github.com/lee-lou2/api/pkg/convert"
 	"github.com/lee-lou2/api/pkg/http"
 	"github.com/lee-lou2/api/platform/cache"
-	"log"
 	netUrl "net/url"
 	"os"
 )
@@ -43,7 +42,6 @@ func setKaKaOToken(resp string) error {
 		); err != nil {
 			return err
 		}
-		log.Printf("카카오 엑세스 토큰 발급 완료, 토큰 : %s\n", tokenValue["access_token"].(string))
 	} else {
 		err := fmt.Errorf("토큰 값이 포함되어있지 않습니다")
 		return err
@@ -65,12 +63,15 @@ func CreateKaKaOToken() error {
 	params.Add("redirect_uri", redirectUri)
 	params.Add("code", code)
 
-	resp, _ := http.Request(
+	resp, err := http.Request(
 		"POST",
 		url,
 		bytes.NewBufferString(params.Encode()),
 		&http.Header{Key: "Content-Type", Value: "application/x-www-form-urlencoded"},
 	)
+	if err != nil {
+		return err
+	}
 	if err := setKaKaOToken(resp.Body); err != nil {
 		return err
 	}
@@ -93,11 +94,14 @@ func RefreshKaKaoToken() error {
 	params.Add("client_id", clientId)
 	params.Add("refresh_token", refreshToken)
 
-	resp, _ := http.Request(
+	resp, err := http.Request(
 		"POST",
 		url,
 		bytes.NewBufferString(params.Encode()),
 	)
+	if err != nil {
+		return err
+	}
 	if err := setKaKaOToken(resp.Body); err != nil {
 		return err
 	}
