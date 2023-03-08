@@ -18,6 +18,6 @@ func refreshKaKaOToken() {
 // RunSchedulers 스케쥴러 실행
 func RunSchedulers() {
 	// 최초 토큰 생성
-	gocron.Every(60 * 10).Second().Do(refreshKaKaOToken)
+	gocron.Every(60 * 30).Second().Do(refreshKaKaOToken)
 	<-gocron.Start()
 }
