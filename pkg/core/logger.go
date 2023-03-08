@@ -2,7 +2,7 @@ package core
 
 import (
 	"context"
-	"github.com/lee-lou2/hub/platform/database"
+	"github.com/lee-lou2/api/platform/database"
 	"go.mongodb.org/mongo-driver/bson"
 	"io"
 	"log"

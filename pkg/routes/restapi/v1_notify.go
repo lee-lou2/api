@@ -2,12 +2,12 @@ package restapi
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/lee-lou2/hub/app/notification/controllers"
-	"github.com/lee-lou2/hub/app/notification/models"
+	"github.com/lee-lou2/api/app/notify/controllers"
+	"github.com/lee-lou2/api/app/notify/models"
 )
 
-// NotificationRoutes func for describe group of private routes.
-func NotificationRoutes(v1 fiber.Router) {
+// NotifyRoutes func for describe group of private routes.
+func NotifyRoutes(v1 fiber.Router) {
 	notify := v1.Group("/notify")
 	{
 		notify.Post("/send/:app", func(c *fiber.Ctx) error {
@@ -22,6 +22,8 @@ func NotificationRoutes(v1 fiber.Router) {
 				controllers.SendEmail(payload)
 			case "sms":
 				controllers.SenSMS(payload)
+			case "slack":
+				controllers.SendSlack(payload)
 			default:
 				panic("Not Found Message Type")
 			}

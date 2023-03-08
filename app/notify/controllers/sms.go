@@ -3,7 +3,7 @@ package controllers
 import (
 	"fmt"
 	twilio "github.com/kevinburke/twilio-go"
-	"github.com/lee-lou2/hub/app/notification/models"
+	"github.com/lee-lou2/api/app/notify/models"
 	"log"
 	"os"
 )

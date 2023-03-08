@@ -17,7 +17,7 @@ func MainRoutes(a *fiber.App) {
 	// Create v1 routes group.
 	v1 := a.Group("/v1")
 	{
-		NotificationRoutes(v1)
+		NotifyRoutes(v1)
 	}
 }
 

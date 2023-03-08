@@ -3,8 +3,10 @@ package cache
 import (
 	"fmt"
 	"github.com/go-redis/redis"
+	"github.com/lee-lou2/api/internal/errors"
 	"os"
 	"strconv"
+	"time"
 )
 
 type NewClient struct {
@@ -77,4 +79,17 @@ func (c *NewClient) Consume(key string) (string, error) {
 	}
 
 	return result[1], nil
+}
+
+// GetValue Redis Get Value
+func (c *NewClient) GetValue(key string) (string, error) {
+	return c.Get(key).Result()
+}
+
+// SetValue Redis Set Value
+func (c *NewClient) SetValue(key string, value string, expiration int) error {
+	if err := c.Set(key, value, time.Duration(expiration)*time.Second).Err(); err != nil {
+		return errors.New(errors.CacheDataConfigError, err)
+	}
+	return nil
 }

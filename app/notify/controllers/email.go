@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/lee-lou2/hub/app/notification/models"
+	"github.com/lee-lou2/api/app/notify/models"
 	"gopkg.in/gomail.v2"
 	"log"
 	"os"

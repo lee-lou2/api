@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/encryptcookie"
 	"github.com/gofiber/fiber/v2/middleware/logger"
-	"github.com/lee-lou2/hub/platform/database"
+	"github.com/lee-lou2/api/platform/database"
 	"log"
 	"os"
 	"time"

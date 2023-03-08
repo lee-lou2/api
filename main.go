@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/gofiber/fiber/v2"
-	"github.com/lee-lou2/hub/pkg/configs"
-	"github.com/lee-lou2/hub/pkg/core"
-	"github.com/lee-lou2/hub/pkg/middleware"
-	"github.com/lee-lou2/hub/pkg/routes/restapi"
+	"github.com/lee-lou2/api/pkg/configs"
+	"github.com/lee-lou2/api/pkg/core"
+	"github.com/lee-lou2/api/pkg/middleware"
+	"github.com/lee-lou2/api/pkg/routes/restapi"
 	"os"
 )
 
