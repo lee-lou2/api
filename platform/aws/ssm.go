@@ -31,7 +31,7 @@ func SetEnvironments() {
 		}
 		resp, err := svc.GetParametersByPath(context.Background(), input)
 		if err != nil {
-			panic("failed to get SSM parameters")
+			panic(fmt.Sprintf("SSM 파라미터 조회를 실패하였습니다. 오류 내용 : %s\n", err.Error()))
 		}
 		paramsGroup = append(paramsGroup, resp.Parameters)
 		if resp.NextToken == nil {
