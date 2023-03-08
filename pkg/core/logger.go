@@ -8,38 +8,30 @@ import (
 	"log"
 )
 
-// MongoDBWriter MongoDB Writer
-type MongoDBWriter struct {
-	collection *database.NewCollection
-}
+// NewWriter 신규 작성자
+type NewWriter struct{}
 
-// Write 로그 등록
-func (w *MongoDBWriter) Write(p []byte) (int, error) {
+func (w NewWriter) Write(p []byte) (int, error) {
 	message := string(p)
-	// 콘솔에 기록
-	fmt.Println(message)
-	_, err := w.collection.InsertOneDocument(bson.M{"message": message})
-	if err != nil {
-		return 0, err
-	}
+
+	go func(message string) {
+		client, collection, err := database.GetCollection("logs", "api")
+		if err != nil {
+			panic(err)
+		}
+		defer client.Disconnect(context.Background())
+
+		if _, err := collection.InsertOneDocument(
+			bson.M{"message": message},
+		); err != nil {
+			fmt.Println(err)
+		}
+	}(message)
+
 	return len(p), nil
 }
 
 // SetLogger 로그 설정
 func SetLogger() {
-	client, collection, err := database.GetCollection("logs", "api")
-	if err != nil {
-		panic(err)
-	}
-	defer client.Disconnect(context.Background())
-
-	if _, err := collection.InsertOneDocument(
-		bson.M{"message": "Application started."},
-	); err != nil {
-		log.Fatal(err)
-	}
-
-	// 로그 출력 방식 변경
-	writer := &MongoDBWriter{collection: collection}
-	log.SetOutput(writer)
+	log.SetOutput(&NewWriter{})
 }
